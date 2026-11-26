@@ -1465,124 +1465,201 @@
       return `${cfg.prefix}${formatted}${cfg.suffix}`;
     }
 
-    function encodeCatalogToHash(stateObj) {
-      const compact = {
-        b: stateObj.brandColor,
-        bl: stateObj.brandColorLight,
-        bd: stateObj.brandColorDark,
-        pb: stateObj.pageBgColor,
-        sb: stateObj.sectionBgColor,
-        st: stateObj.sectionTextColor,
-        cu: stateObj.currencyCode,
-        c: {
-          n: stateObj.company.name,
-          ht: stateObj.company.heroTitle,
-          hs: stateObj.company.heroSubtitle,
-          hi: (stateObj.company.heroImage || '').startsWith('data:') ? '' : (stateObj.company.heroImage || ''),
-          d: stateObj.company.description,
-          w: stateObj.company.whatsapp,
-          l: stateObj.company.location,
-          h: stateObj.company.hours
-        },
-        k: (stateObj.categories || []).map(cat => ({
-          i: cat.id,
-          n: cat.name,
-          c: cat.color,
-          t: cat.textColor
-        })),
-        p: (stateObj.products || []).map(prod => ({
-          i: prod.id,
-          c: prod.categoryId,
-          n: prod.name,
-          v: prod.priceCOP,
-          d: prod.description || '',
-          m: (prod.image || '').startsWith('data:') ? '' : (prod.image || '')
-        }))
-      };
-      const json = JSON.stringify(compact);
-      const bytes = new TextEncoder().encode(json);
+    function bytesToBase64Url(bytes) {
       let bin = '';
-      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      const chunk = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunk) {
+        bin += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+      }
       return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
     }
 
-    function decodeCatalogFromHash() {
+    function base64UrlToBytes(str) {
+      let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return bytes;
+    }
+
+    function buildCompactCatalogPayload(stateObj) {
+      const c = { n: stateObj.company.name || 'Tienda Online' };
+      if (stateObj.company.heroTitle && stateObj.company.heroTitle !== `Catálogo Oficial de ${c.n}`) c.ht = stateObj.company.heroTitle;
+      if (stateObj.company.heroSubtitle) c.hs = stateObj.company.heroSubtitle;
+      const heroImg = (stateObj.company.heroImage || '').trim();
+      if (heroImg && !heroImg.startsWith('data:')) c.hi = heroImg;
+      if (stateObj.company.description) c.d = stateObj.company.description;
+      if (stateObj.company.whatsapp) c.w = stateObj.company.whatsapp;
+      if (stateObj.company.location) c.l = stateObj.company.location;
+      if (stateObj.company.hours) c.h = stateObj.company.hours;
+
+      const compact = { c };
+      if (stateObj.brandColor && stateObj.brandColor !== DEFAULT_DATA.brandColor) compact.b = stateObj.brandColor;
+      if (stateObj.brandColorLight && stateObj.brandColorLight !== DEFAULT_DATA.brandColorLight) compact.bl = stateObj.brandColorLight;
+      if (stateObj.brandColorDark && stateObj.brandColorDark !== DEFAULT_DATA.brandColorDark) compact.bd = stateObj.brandColorDark;
+      if (stateObj.pageBgColor && stateObj.pageBgColor !== DEFAULT_DATA.pageBgColor) compact.pb = stateObj.pageBgColor;
+      if (stateObj.sectionBgColor && stateObj.sectionBgColor !== DEFAULT_DATA.sectionBgColor) compact.sb = stateObj.sectionBgColor;
+      if (stateObj.sectionTextColor && stateObj.sectionTextColor !== DEFAULT_DATA.sectionTextColor) compact.st = stateObj.sectionTextColor;
+      if (stateObj.currencyCode && stateObj.currencyCode !== 'COP') compact.cu = stateObj.currencyCode;
+
+      if (Array.isArray(stateObj.categories) && stateObj.categories.length) {
+        compact.k = stateObj.categories.map(cat => {
+          const item = { i: cat.id, n: cat.name };
+          if (cat.color && cat.color !== (compact.b || DEFAULT_DATA.brandColor)) item.c = cat.color;
+          if (cat.textColor && cat.textColor !== '#ffffff') item.t = cat.textColor;
+          return item;
+        });
+      }
+
+      if (Array.isArray(stateObj.products) && stateObj.products.length) {
+        compact.p = stateObj.products.map(prod => {
+          const item = {
+            i: prod.id,
+            c: prod.categoryId,
+            n: prod.name,
+            v: Number(prod.priceCOP) || 0
+          };
+          if (prod.description) item.d = prod.description;
+          const pImg = (prod.image || '').trim();
+          if (pImg && !pImg.startsWith('data:')) item.m = pImg;
+          return item;
+        });
+      }
+
+      return compact;
+    }
+
+    async function encodeCatalogToHashAsync(stateObj) {
+      const compact = buildCompactCatalogPayload(stateObj);
+      const rawBytes = new TextEncoder().encode(JSON.stringify(compact));
+      if (typeof CompressionStream !== 'undefined') {
+        try {
+          const cs = new CompressionStream('deflate');
+          const writer = cs.writable.getWriter();
+          writer.write(rawBytes);
+          writer.close();
+          const compBuf = await new Response(cs.readable).arrayBuffer();
+          const compBytes = new Uint8Array(compBuf);
+          if (compBytes.length < rawBytes.length) {
+            return 'z1.' + bytesToBase64Url(compBytes);
+          }
+        } catch (e) {}
+      }
+      return 'r0.' + bytesToBase64Url(rawBytes);
+    }
+
+    function encodeCatalogToHashSyncFallback(stateObj) {
+      const compact = buildCompactCatalogPayload(stateObj);
+      const rawBytes = new TextEncoder().encode(JSON.stringify(compact));
+      return 'r0.' + bytesToBase64Url(rawBytes);
+    }
+
+    function parseCompactCatalogObject(d) {
+      if (!d || !d.c) return null;
+      const currencyCode = CURRENCY_CONFIGS[d.cu] ? d.cu : 'COP';
+      const products = Array.isArray(d.p) ? d.p.map(item => ({
+        id: item.i || ('prod-' + Math.random().toString(36).slice(2, 8)),
+        categoryId: item.c || 'cat-general',
+        name: item.n || 'Producto',
+        priceCOP: Number(item.v) || 0,
+        price: formatPriceForCurrency(Number(item.v) || 0, currencyCode),
+        description: item.d || '',
+        image: item.m || ''
+      })) : [];
+
+      return {
+        brandColor: d.b || DEFAULT_DATA.brandColor,
+        brandColorLight: d.bl || DEFAULT_DATA.brandColorLight,
+        brandColorDark: d.bd || DEFAULT_DATA.brandColorDark,
+        pageBgColor: d.pb || DEFAULT_DATA.pageBgColor,
+        sectionBgColor: d.sb || DEFAULT_DATA.sectionBgColor,
+        sectionTextColor: d.st || DEFAULT_DATA.sectionTextColor,
+        currencyCode,
+        company: {
+          name: d.c.n || 'Tienda Online',
+          heroTitle: d.c.ht || d.c.n || 'Bienvenidos a nuestra tienda',
+          heroSubtitle: d.c.hs || '',
+          heroImage: d.c.hi || '',
+          description: d.c.d || '',
+          whatsapp: d.c.w || '',
+          location: d.c.l || '',
+          hours: d.c.h || ''
+        },
+        categories: Array.isArray(d.k) ? d.k.map(k => ({
+          id: k.i,
+          name: k.n,
+          color: k.c || d.b || '#e11d48',
+          textColor: k.t || '#ffffff'
+        })) : [],
+        products
+      };
+    }
+
+    async function decodeCatalogFromHashAsync() {
       try {
         const hash = window.location.hash || '';
-        const match = hash.match(/cat=([A-Za-z0-9\-_]+)/);
+        const match = hash.match(/cat=([A-Za-z0-9\-_\.]+)/);
         if (!match) return null;
-        let b64 = match[1].replace(/-/g, '+').replace(/_/g, '/');
-        while (b64.length % 4) b64 += '=';
-        const bin = atob(b64);
-        const bytes = new Uint8Array(bin.length);
-        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        const payload = match[1];
+        if (payload.startsWith('z1.') && typeof DecompressionStream !== 'undefined') {
+          const compBytes = base64UrlToBytes(payload.slice(3));
+          const ds = new DecompressionStream('deflate');
+          const writer = ds.writable.getWriter();
+          writer.write(compBytes);
+          writer.close();
+          const rawBuf = await new Response(ds.readable).arrayBuffer();
+          const json = new TextDecoder().decode(new Uint8Array(rawBuf));
+          return parseCompactCatalogObject(JSON.parse(json));
+        }
+        const rawStr = payload.startsWith('r0.') ? payload.slice(3) : payload;
+        const bytes = base64UrlToBytes(rawStr);
         const json = new TextDecoder().decode(bytes);
-        const d = JSON.parse(json);
-        if (!d || !d.c) return null;
-
-        const currencyCode = CURRENCY_CONFIGS[d.cu] ? d.cu : 'COP';
-        const products = Array.isArray(d.p) ? d.p.map(item => ({
-          id: item.i || ('prod-' + Math.random().toString(36).slice(2, 8)),
-          categoryId: item.c || 'cat-general',
-          name: item.n || 'Producto',
-          priceCOP: Number(item.v) || 0,
-          price: formatPriceForCurrency(Number(item.v) || 0, currencyCode),
-          description: item.d || '',
-          image: item.m || ''
-        })) : [];
-
-        return {
-          brandColor: d.b || DEFAULT_DATA.brandColor,
-          brandColorLight: d.bl || DEFAULT_DATA.brandColorLight,
-          brandColorDark: d.bd || DEFAULT_DATA.brandColorDark,
-          pageBgColor: d.pb || DEFAULT_DATA.pageBgColor,
-          sectionBgColor: d.sb || DEFAULT_DATA.sectionBgColor,
-          sectionTextColor: d.st || DEFAULT_DATA.sectionTextColor,
-          currencyCode,
-          company: {
-            name: d.c.n || 'Tienda Online',
-            heroTitle: d.c.ht || d.c.n || 'Bienvenidos a nuestra tienda',
-            heroSubtitle: d.c.hs || '',
-            heroImage: d.c.hi || '',
-            description: d.c.d || '',
-            whatsapp: d.c.w || '',
-            location: d.c.l || '',
-            hours: d.c.h || ''
-          },
-          categories: Array.isArray(d.k) ? d.k.map(k => ({
-            id: k.i,
-            name: k.n,
-            color: k.c || d.b || '#e11d48',
-            textColor: k.t || '#ffffff'
-          })) : [],
-          products
-        };
+        return parseCompactCatalogObject(JSON.parse(json));
       } catch (e) {
         return null;
       }
     }
 
-    function copyShareableCatalogLink() {
+    function decodeCatalogFromHash() {
+      try {
+        const hash = window.location.hash || '';
+        const match = hash.match(/cat=([A-Za-z0-9\-_\.]+)/);
+        if (!match) return null;
+        const payload = match[1];
+        if (payload.startsWith('z1.')) return null;
+        const rawStr = payload.startsWith('r0.') ? payload.slice(3) : payload;
+        const bytes = base64UrlToBytes(rawStr);
+        const json = new TextDecoder().decode(bytes);
+        return parseCompactCatalogObject(JSON.parse(json));
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function buildShareableCatalogUrl() {
+      const encoded = await encodeCatalogToHashAsync(appState);
+      const baseUrl = window.location.href.split('#')[0];
+      return `${baseUrl}#cat=${encoded}`;
+    }
+
+    async function copyShareableCatalogLink() {
       const hasEmbeddedImages =
         (appState.products || []).some(p => (p.image || '').startsWith('data:')) ||
         (appState.company.heroImage || '').startsWith('data:');
-      const encoded = encodeCatalogToHash(appState);
-      const baseUrl = window.location.href.split('#')[0];
-      const shareUrl = `${baseUrl}#cat=${encoded}`;
+      const shareUrl = await buildShareableCatalogUrl();
 
       copyTextToClipboard(shareUrl, () => {
         if (hasEmbeddedImages) {
-          showToast('Link copiado (las fotos locales no van en el link; usa URLs o exporta archivo)');
+          showToast('Link comprimido copiado (las fotos locales no van en el link; usa URLs o exporta archivo)');
         } else {
-          showToast('¡Enlace compartible copiado! Envíalo a tus clientes');
+          showToast('¡Enlace corto copiado! Envíalo a tus clientes');
         }
       });
     }
 
-    function copyWhatsAppPromoMessage() {
-      const encoded = encodeCatalogToHash(appState);
-      const baseUrl = window.location.href.split('#')[0];
-      const shareUrl = `${baseUrl}#cat=${encoded}`;
+    async function copyWhatsAppPromoMessage() {
+      const shareUrl = await buildShareableCatalogUrl();
       const store = appState.company.name || 'nuestra tienda';
       const msg = `🛍️ *¡Conoce el catálogo digital de ${store}!*\n\nExplora nuestros productos disponibles, arma tu carrito y envíanos tu pedido directo por WhatsApp aquí 👇\n${shareUrl}`;
       copyTextToClipboard(msg, () => {
@@ -3213,17 +3290,36 @@
       });
     }
 
-    window.addEventListener('hashchange', () => {
+    async function hydrateFromCompressedHashIfNeeded() {
+      const hash = window.location.hash || '';
+      if (/cat=z1\./.test(hash)) {
+        const decoded = await decodeCatalogFromHashAsync();
+        if (decoded) {
+          isViewingSharedLink = true;
+          appState = decoded;
+          currentUser = null;
+          isEditMode = false;
+          activeCategoryId = 'all';
+          renderAll();
+          const authModal = document.getElementById('auth-modal');
+          if (authModal) authModal.classList.add('hidden');
+        }
+      }
+    }
+
+    window.addEventListener('hashchange', async () => {
       appState = loadState();
       currentUser = isViewingSharedLink ? null : loadSession();
       isEditMode = Boolean(currentUser);
       activeCategoryId = 'all';
       renderAll();
+      await hydrateFromCompressedHashIfNeeded();
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       renderAll();
       initDraggableCartBall();
+      await hydrateFromCompressedHashIfNeeded();
       if (!currentUser && !isViewingSharedLink) {
         openAuthModal('register', true);
       }
@@ -3249,3 +3345,4 @@
   </script>
 </body>
 </html>
+Analizando
