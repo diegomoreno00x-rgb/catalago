@@ -137,7 +137,6 @@
     body.client-shared-view #header-create-cta,
     body.client-shared-view #hero-visitor-actions,
     body.client-shared-view #onboarding-steps,
-    body.client-shared-view #drawer-auth-box,
     body.client-shared-view #drawer-share-section,
     body.client-shared-view #drawer-admin-actions,
     body.client-shared-view #drawer-color-section,
@@ -1938,8 +1937,7 @@ ${shareUrl}`;
       if (isViewingSharedLink) {
         currentUser = null;
         isEditMode = false;
-        closeAuthModal();
-        if (authBox) authBox.classList.add('hidden');
+        if (authBox) authBox.classList.remove('hidden');
         if (adminActions) adminActions.classList.add('hidden');
         if (shareSection) shareSection.classList.add('hidden');
         if (colorSection) colorSection.classList.add('hidden');
