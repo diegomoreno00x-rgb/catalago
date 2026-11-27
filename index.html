@@ -5,19 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo Digital Interactivo — Crea y Comparte tu Tienda</title>
   <meta name="description" content="Crea tu catálogo digital interactivo gratis con carrito de compras, multimoneda y pedidos directos por WhatsApp." />
-
-  <!-- Open Graph / WhatsApp Link Preview -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Digital Catalog" />
-  <meta property="og:title" content="NOMBRE DE TU EMPRESA" />
-  <meta property="og:description" content="DESCRIPCION CORTA DE TU EMPRESA" />
-  <meta id="og-image-meta" property="og:image" content="https://digital-catalogg.github.io/catalago/NOMBRE-DE-TU-IMAGEN.jpg" />
-  <meta id="og-secure-image-meta" property="og:image:secure_url" content="https://digital-catalogg.github.io/catalago/NOMBRE-DE-TU-IMAGEN.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta id="twitter-image-meta" name="twitter:image" content="https://digital-catalogg.github.io/catalago/NOMBRE-DE-TU-IMAGEN.jpg" />
-
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -146,10 +133,11 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
-  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm">
+  <!-- Encabezado Superior -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs">
     <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2.5 min-w-0">
-        <div id="header-logo-badge" class="w-10 h-10 rounded-2xl bg-brand text-white flex items-center justify-center font-extrabold text-lg shrink-0 shadow-sm">
+        <div id="header-logo-badge" class="w-10 h-10 rounded-2xl bg-brand text-white flex items-center justify-center font-extrabold text-lg shrink-0 shadow-xs">
           N
         </div>
         <div class="min-w-0">
@@ -197,7 +185,7 @@
           id="header-company-info-btn"
           type="button"
           onclick="toggleCompanySection()"
-          class="px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 shadow-sm active:scale-95"
+          class="px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 shadow-2xs active:scale-95"
           title="Ver información de contacto y envíos"
         >
           <i data-lucide="building-2" class="w-3.5 h-3.5 text-brand"></i>
@@ -221,16 +209,11 @@
       <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
       <span>Modo Edición Activo — Personaliza tu tienda, agrega productos y copia el enlace para compartirlo.</span>
     </div>
-
-    <div id="shared-preview-banner" class="hidden bg-emerald-600 text-white text-xs font-semibold py-1.5 px-4 text-center flex flex-wrap items-center justify-center gap-2">
-      <span>Estás viendo un catálogo compartido. ¿Quieres crear el tuyo propio?</span>
-      <button type="button" onclick="startFreshCatalogFromShared()" class="underline font-extrabold hover:text-emerald-100">
-        Crear cuenta gratis →
-      </button>
-    </div>
   </header>
 
+  <!-- Contenido Principal -->
   <main class="flex-1">
+    <!-- Portada / Hero -->
     <section id="inicio" class="relative w-full overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white min-h-[260px] sm:min-h-[350px] md:min-h-[400px] flex items-center">
       <img
         id="hero-bg-image"
@@ -245,7 +228,7 @@
 
       <div id="hero-default-content" class="relative z-10 max-w-5xl mx-auto px-4 py-10 sm:py-14 w-full">
         <div class="max-w-2xl space-y-4">
-          <div id="hero-platform-pill" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm text-xs font-semibold text-amber-300">
+          <div id="hero-platform-pill" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-xs text-xs font-semibold text-amber-300">
             <i data-lucide="zap" class="w-3.5 h-3.5"></i>
             <span>Crea tu catálogo digital gratis y recibe pedidos por WhatsApp</span>
           </div>
@@ -268,9 +251,9 @@
             </button>
             <a
               href="#catalogo-productos"
-              class="px-4 py-3 rounded-2xl bg-white/12 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-bold backdrop-blur-sm flex items-center gap-1.5"
+              class="px-4 py-3 rounded-2xl bg-white/12 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-bold backdrop-blur-xs flex items-center gap-1.5"
             >
-              <span>Ver catálogo demo</span>
+              <span>Ver catálogo</span>
               <i data-lucide="arrow-down" class="w-4 h-4"></i>
             </a>
           </div>
@@ -278,8 +261,9 @@
       </div>
     </section>
 
+    <!-- Guía rápida colapsable de 3 pasos -->
     <section id="onboarding-steps" class="max-w-5xl mx-auto px-4 mt-6">
-      <div class="bg-section-card rounded-3xl border border-slate-200/90 shadow-sm p-4 sm:p-5">
+      <div class="bg-section-card rounded-3xl border border-slate-200/90 shadow-xs p-4 sm:p-5">
         <div class="flex items-center justify-between gap-2 mb-3">
           <div class="flex items-center gap-2">
             <span class="w-7 h-7 rounded-xl bg-brand-soft text-brand flex items-center justify-center font-bold">
@@ -303,9 +287,7 @@
             <span class="w-6 h-6 rounded-full bg-brand text-white font-extrabold flex items-center justify-center shrink-0">1</span>
             <div>
               <p class="font-bold text-slate-900">Crea tu cuenta y tienda</p>
-              <p class="text-slate-500 mt-0.5">
-                Registra el nombre de tu negocio, WhatsApp, moneda y datos de contacto.
-              </p>
+              <p class="text-slate-500 mt-0.5">Registra el nombre de tu negocio, WhatsApp, moneda y datos de contacto.</p>
             </div>
           </div>
 
@@ -313,9 +295,7 @@
             <span class="w-6 h-6 rounded-full bg-brand text-white font-extrabold flex items-center justify-center shrink-0">2</span>
             <div>
               <p class="font-bold text-slate-900">Agrega secciones y productos</p>
-              <p class="text-slate-500 mt-0.5">
-                Sube fotos desde galería/PC, arrastra o pega con <kbd class="px-1 bg-white border rounded">Ctrl+V</kbd>, o usa enlaces URL.
-              </p>
+              <p class="text-slate-500 mt-0.5">Sube fotos o usa enlaces URL directos para mantener el link corto.</p>
             </div>
           </div>
 
@@ -323,15 +303,14 @@
             <span class="w-6 h-6 rounded-full bg-emerald-600 text-white font-extrabold flex items-center justify-center shrink-0">3</span>
             <div>
               <p class="font-bold text-slate-900">Copia tu link y compártelo</p>
-              <p class="text-slate-500 mt-0.5">
-                Envía tu enlace compartible por WhatsApp para que tus clientes armen su carrito.
-              </p>
+              <p class="text-slate-500 mt-0.5">Tus clientes entran solo a ver productos, llenar su carrito y pedir.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Información de la Empresa (Desplegable) -->
     <section id="datos-empresa" class="hidden max-w-5xl mx-auto px-4 mt-6 relative z-10 animate-fade-in">
       <div class="bg-section-card rounded-3xl shadow-md border border-slate-200/80 p-5 sm:p-7">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
@@ -402,6 +381,7 @@
       </div>
     </section>
 
+    <!-- Catálogo de Productos -->
     <section id="catalogo-productos" class="max-w-5xl mx-auto px-4 pb-16 pt-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <div>
@@ -423,6 +403,7 @@
 
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-5" id="categories-bar"></div>
 
+      <!-- Panel Rápido de Edición -->
       <div class="edit-only hidden mb-6 p-4 rounded-2xl bg-slate-900 text-white flex flex-col lg:flex-row lg:items-center justify-between gap-3 shadow-md">
         <div class="flex items-center gap-2.5">
           <div class="p-2 rounded-xl bg-white/10">
@@ -430,7 +411,7 @@
           </div>
           <div>
             <p class="text-xs sm:text-sm font-bold">Panel Rápido de Creación y Publicación</p>
-            <p class="text-[11px] text-slate-300">Agrega secciones, sube productos o genera el link compartible para tus clientes</p>
+            <p class="text-[11px] text-slate-300">Agrega secciones, sube productos o copia el enlace corto de solo compra para tus clientes</p>
           </div>
         </div>
 
@@ -476,11 +457,11 @@
         <div class="w-14 h-14 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mx-auto mb-3">
           <i data-lucide="package-open" class="w-7 h-7"></i>
         </div>
-        <h4 id="empty-state-title" class="text-base font-extrabold text-section-main">Tu catálogo aún no tiene productos</h4>
+        <h4 id="empty-state-title" class="text-base font-extrabold text-section-main">No hay productos para mostrar</h4>
         <p id="empty-state-desc" class="text-xs sm:text-sm opacity-75 max-w-md mx-auto mt-1 mb-5">
-          Comienza agregando tu primer producto con foto y precio, o carga una plantilla de ejemplo para ver cómo luce.
+          Prueba con otro filtro o categoría.
         </p>
-        <div class="flex flex-wrap items-center justify-center gap-2.5">
+        <div id="empty-state-owner-actions" class="hidden flex-wrap items-center justify-center gap-2.5">
           <button
             type="button"
             onclick="requireAuth(() => openProductModal())"
@@ -502,30 +483,33 @@
     </section>
   </main>
 
+  <!-- Botón Flotante Circular para Dueño -->
   <button
     id="floating-add-ball"
     type="button"
     onclick="requireAuth(() => openProductModal())"
     aria-label="Agregar productos"
-    class="admin-only hidden fixed bottom-5 right-5 z-40 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-brand hover-bg-brand text-white shadow-2xl border-4 border-white/25 flex flex-col items-center justify-center gap-1 p-2 text-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+    class="admin-only hidden fixed bottom-5 right-5 z-40 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-brand hover-bg-brand text-white shadow-2xl shadow-black/35 border-4 border-white/25 flex flex-col items-center justify-center gap-1 p-2 text-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
   >
     <i data-lucide="plus" class="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5] shrink-0"></i>
     <span class="text-[11px] sm:text-xs font-extrabold leading-tight tracking-tight">Agregar producto</span>
   </button>
 
+  <!-- Botón Flotante Movible Circular para el Carrito -->
   <button
     id="floating-cart-ball"
     type="button"
     aria-label="Carrito de compras"
-    class="fixed bottom-5 left-5 z-40 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-slate-900 hover:bg-slate-800 text-white shadow-2xl border-4 border-white/25 flex flex-col items-center justify-center gap-1 p-2 text-center select-none touch-none cursor-grab active:cursor-grabbing transition-transform duration-150"
+    class="fixed bottom-5 left-5 z-40 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-slate-900 hover:bg-slate-800 text-white shadow-2xl shadow-black/35 border-4 border-white/25 flex flex-col items-center justify-center gap-1 p-2 text-center select-none touch-none cursor-grab active:cursor-grabbing transition-transform duration-150"
   >
-    <span id="floating-cart-badge" class="hidden absolute -top-1 -right-1 min-w-[26px] h-6 px-1.5 rounded-full bg-brand text-white text-xs font-extrabold flex items-center justify-center shadow-md border-2 border-white tabular-nums">
+    <span id="floating-cart-badge" class="hidden absolute -top-1 -right-1 min-w-[26px] h-6.5 px-1.5 rounded-full bg-brand text-white text-xs font-extrabold flex items-center justify-center shadow-md border-2 border-white tabular-nums">
       0
     </span>
     <i data-lucide="shopping-cart" class="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.3] shrink-0 text-amber-400"></i>
     <span class="text-[11px] sm:text-xs font-extrabold leading-tight tracking-tight">Mi Carrito</span>
   </button>
 
+  <!-- Vista Detallada de Producto -->
   <section id="product-detail-view" class="hidden fixed inset-0 z-50 bg-white overflow-y-auto animate-fade-in">
     <div class="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 h-16 flex items-center justify-between">
       <button
@@ -598,7 +582,8 @@
     </div>
   </section>
 
-  <div id="cart-backdrop" onclick="closeCartDrawer()" class="hidden fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-sm"></div>
+  <!-- Panel Lateral del Carrito de Compras -->
+  <div id="cart-backdrop" onclick="closeCartDrawer()" class="hidden fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-xs"></div>
   <aside id="cart-drawer" class="hidden fixed top-0 right-0 bottom-0 z-50 w-96 max-w-[92vw] bg-white shadow-2xl border-l border-slate-200 flex flex-col animate-drawer">
     <div class="p-5 border-b border-slate-100 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
@@ -625,7 +610,7 @@
       <p class="text-xs text-slate-500 max-w-xs mt-1 mb-4">
         Toca el botón "+ Carrito" en cualquier producto para armar tu pedido y enviarlo por WhatsApp.
       </p>
-      <button type="button" onclick="closeCartDrawer()" class="px-4 py-2.5 rounded-xl bg-brand text-white text-xs font-bold shadow-sm">
+      <button type="button" onclick="closeCartDrawer()" class="px-4 py-2.5 rounded-xl bg-brand text-white text-xs font-bold shadow-xs">
         Explorar productos
       </button>
     </div>
@@ -656,7 +641,8 @@
     </div>
   </aside>
 
-  <div id="drawer-backdrop" onclick="closeDrawer()" class="hidden fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-sm"></div>
+  <!-- Menú Lateral (Drawer) -->
+  <div id="drawer-backdrop" onclick="closeDrawer()" class="hidden fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-xs"></div>
   <aside id="side-drawer" class="hidden fixed top-0 right-0 bottom-0 z-50 w-80 max-w-[88vw] bg-white shadow-2xl border-l border-slate-200 flex flex-col animate-drawer">
     <div class="p-5 border-b border-slate-100 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
@@ -664,8 +650,8 @@
           <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
         </div>
         <div>
-          <h3 class="font-bold text-slate-900 text-base">Opciones del Catálogo</h3>
-          <p class="text-[11px] text-slate-500">Crea, gestiona y comparte tu tienda</p>
+          <h3 id="drawer-main-title" class="font-bold text-slate-900 text-base">Opciones del Catálogo</h3>
+          <p id="drawer-main-subtitle" class="text-[11px] text-slate-500">Explora secciones y moneda</p>
         </div>
       </div>
       <button type="button" onclick="closeDrawer()" class="p-2 rounded-xl hover:bg-slate-100 text-slate-500">
@@ -674,7 +660,8 @@
     </div>
 
     <div class="flex-1 overflow-y-auto p-4 space-y-5">
-      <div class="p-4 rounded-2xl bg-slate-900 text-white shadow-sm">
+      <!-- Acceso Creador / Administrador (oculto en enlaces compartidos de solo compra) -->
+      <div id="drawer-auth-box" class="p-4 rounded-2xl bg-slate-900 text-white shadow-sm">
         <div id="drawer-logged-out-view">
           <div class="flex items-center gap-2.5 mb-2">
             <div class="p-2 rounded-xl bg-white/10 text-amber-400">
@@ -737,6 +724,7 @@
         </div>
       </div>
 
+      <!-- Compartir y Respaldar Catálogo -->
       <div id="drawer-share-section" class="hidden p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200/80 space-y-2.5">
         <div class="flex items-center gap-2">
           <div class="p-1.5 rounded-lg bg-emerald-600 text-white shrink-0">
@@ -744,14 +732,14 @@
           </div>
           <div>
             <p class="text-xs font-extrabold text-emerald-950">Publicar y Compartir</p>
-            <p class="text-[10px] text-emerald-800">El enlace incluye tu tienda, secciones y productos</p>
+            <p class="text-[10px] text-emerald-800">Enlace de solo compra (sin edición)</p>
           </div>
         </div>
 
         <button
           type="button"
           onclick="copyShareableCatalogLink()"
-          class="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all"
+          class="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition-all"
         >
           <i data-lucide="link" class="w-3.5 h-3.5"></i>
           <span>Copiar link</span>
@@ -783,6 +771,7 @@
         </div>
       </div>
 
+      <!-- Acciones de Personalización -->
       <div id="drawer-admin-actions" class="hidden">
         <p class="px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Personalizar Catálogo</p>
         <div class="space-y-1.5">
@@ -813,6 +802,7 @@
         </div>
       </div>
 
+      <!-- Navegación y Moneda -->
       <div>
         <p class="px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Navegación Rápida</p>
         <div class="space-y-1" id="drawer-nav-links"></div>
@@ -857,6 +847,7 @@
         </div>
       </div>
 
+      <!-- Colores de Marca, Página y Secciones -->
       <div id="drawer-color-section" class="hidden px-2 space-y-4">
         <div>
           <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Color Principal de Marca</p>
@@ -918,6 +909,7 @@
     </div>
   </aside>
 
+  <!-- Modal Inicial de Acceso -->
   <div id="auth-modal" class="hidden fixed inset-0 z-50 auth-generated-backdrop flex items-center justify-center p-4 overflow-y-auto">
     <svg aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" class="pointer-events-none fixed inset-0 w-full h-full auth-animated-lines">
       <defs>
@@ -962,7 +954,7 @@
           type="button"
           id="tab-register-btn"
           onclick="switchAuthTab('register')"
-          class="py-2.5 rounded-xl text-xs font-extrabold transition-all bg-white text-slate-900 shadow-sm"
+          class="py-2.5 rounded-xl text-xs font-extrabold transition-all bg-white text-slate-900 shadow-xs"
         >
           Crear Cuenta
         </button>
@@ -1030,7 +1022,8 @@
     </div>
   </div>
 
-  <div id="company-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+  <!-- Modal Datos de Empresa -->
+  <div id="company-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 p-6 animate-fade-in">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100">
         <h3 class="text-lg font-extrabold text-slate-900">Datos de la Empresa y Portada</h3>
@@ -1041,7 +1034,7 @@
 
       <form id="company-form" onsubmit="saveCompanyData(event)" class="space-y-4 mt-4">
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1.5">Imagen de Portada (Se mostrará limpia sin texto encima)</label>
+          <label class="block text-xs font-bold text-slate-700 mb-1.5">Imagen de Portada (Usa un enlace URL para mantener el link corto)</label>
           <div
             id="hero-dropzone"
             ondragover="handleDropzoneDragOver(event,'hero-dropzone')"
@@ -1087,11 +1080,11 @@
           <input type="text" id="input-company-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
         </div>
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Título de Portada (Visible si no usas imagen de portada)</label>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Título de Portada</label>
           <input type="text" id="input-hero-title" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" />
         </div>
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Mensaje de Bienvenida (Visible si no usas imagen de portada)</label>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Mensaje de Bienvenida</label>
           <textarea id="input-hero-subtitle" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm"></textarea>
         </div>
         <div>
@@ -1121,7 +1114,8 @@
     </div>
   </div>
 
-  <div id="category-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+  <!-- Modal Nueva/Editar Sección -->
+  <div id="category-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 p-6 animate-fade-in">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100">
         <h3 id="category-modal-title" class="text-lg font-extrabold text-slate-900">Nueva Sección</h3>
@@ -1160,7 +1154,8 @@
     </div>
   </div>
 
-  <div id="product-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+  <!-- Modal Nuevo/Editar Producto -->
+  <div id="product-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200 p-6 animate-fade-in">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100">
         <h3 id="product-modal-title" class="text-lg font-extrabold text-slate-900">Nuevo Producto</h3>
@@ -1202,7 +1197,7 @@
                 type="text"
                 id="input-product-image"
                 oninput="updatePreviewFromUrl(this.value)"
-                placeholder="O pega enlace (URL) de imagen..."
+                placeholder="Pega enlace (URL) directo de imagen (recomendado para link corto)..."
                 class="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs"
               />
             </div>
@@ -1248,12 +1243,14 @@
     </div>
   </div>
 
+  <!-- Notificación Toast -->
   <div id="toast-notification" class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-4 py-3 rounded-2xl bg-slate-900 text-white text-xs sm:text-sm font-semibold shadow-xl flex items-center gap-2 max-w-[90vw] text-center">
     <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
     <span id="toast-message"></span>
   </div>
 
-  <div id="confirm-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+  <!-- Modal de Confirmación -->
+  <div id="confirm-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200">
       <h4 id="confirm-title" class="text-base font-extrabold text-slate-900"></h4>
       <p id="confirm-text" class="text-sm text-slate-600 mt-1.5 mb-5"></p>
@@ -1348,7 +1345,7 @@
     let appState = loadState();
     let cartItems = loadCart();
     let currentUser = isViewingSharedLink ? null : loadSession();
-    let isEditMode = Boolean(currentUser);
+    let isEditMode = Boolean(currentUser && !isViewingSharedLink);
     let activeCategoryId = 'all';
     let searchQuery = '';
     let pendingAuthAction = null;
@@ -1395,194 +1392,171 @@
       return `${cfg.prefix}${formatted}${cfg.suffix}`;
     }
 
-    function bytesToBase64Url(bytes) {
-      let bin = '';
-      for (let i = 0; i < bytes.length; i++) {
-        bin += String.fromCharCode(bytes[i]);
+    // Codifica solo los datos necesarios para ver y comprar (sin datos de edición ni campos vacíos)
+    function encodeCatalogToHash(stateObj) {
+      const categories = Array.isArray(stateObj.categories) ? stateObj.categories : [];
+      const catIndexMap = new Map();
+      const compactCats = categories.map((cat, idx) => {
+        catIndexMap.set(cat.id, idx);
+        const item = { n: cat.name };
+        if (cat.color && cat.color !== DEFAULT_DATA.brandColor) item.c = cat.color;
+        if (cat.textColor && cat.textColor !== '#ffffff') item.t = cat.textColor;
+        return item;
+      });
+
+      const compactProds = (stateObj.products || []).map(prod => {
+        const item = {
+          n: prod.name,
+          v: Math.round(Number(prod.priceCOP) || parseRawNumberFromFormattedPrice(prod.price) || 0)
+        };
+        const cIdx = catIndexMap.get(prod.categoryId);
+        if (typeof cIdx === 'number') item.k = cIdx;
+        if (prod.description && prod.description.trim()) item.d = prod.description.trim();
+        const img = (prod.image || '').trim();
+        if (img && !img.startsWith('data:')) item.m = img;
+        return item;
+      });
+
+      const company = {};
+      if (stateObj.company?.name) company.n = stateObj.company.name;
+      if (stateObj.company?.heroTitle && stateObj.company.heroTitle !== stateObj.company.name) {
+        company.ht = stateObj.company.heroTitle;
       }
-      return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    }
+      if (stateObj.company?.heroSubtitle) company.hs = stateObj.company.heroSubtitle;
+      const hImg = (stateObj.company?.heroImage || '').trim();
+      if (hImg && !hImg.startsWith('data:')) company.hi = hImg;
+      if (stateObj.company?.description) company.d = stateObj.company.description;
+      if (stateObj.company?.whatsapp) company.w = stateObj.company.whatsapp;
+      if (stateObj.company?.location) company.l = stateObj.company.location;
+      if (stateObj.company?.hours) company.h = stateObj.company.hours;
 
-    function base64UrlToBytes(str) {
-      let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
-      while (b64.length % 4) b64 += '=';
-      const bin = atob(b64);
-      const bytes = new Uint8Array(bin.length);
-      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      return bytes;
-    }
-
-    function buildCompactCatalogPayload(stateObj) {
-      const c = { n: stateObj.company.name || 'Tienda Online' };
-      if (stateObj.company.heroTitle && stateObj.company.heroTitle !== `Catálogo Oficial de ${c.n}`) c.ht = stateObj.company.heroTitle;
-      if (stateObj.company.heroSubtitle) c.hs = stateObj.company.heroSubtitle;
-      const heroImg = (stateObj.company.heroImage || '').trim();
-      if (heroImg && !heroImg.startsWith('data:')) c.hi = heroImg;
-      if (stateObj.company.description) c.d = stateObj.company.description;
-      if (stateObj.company.whatsapp) c.w = stateObj.company.whatsapp;
-      if (stateObj.company.location) c.l = stateObj.company.location;
-      if (stateObj.company.hours) c.h = stateObj.company.hours;
-
-      const compact = { c };
-      if (stateObj.brandColor && stateObj.brandColor !== DEFAULT_DATA.brandColor) compact.b = stateObj.brandColor;
-      if (stateObj.brandColorLight && stateObj.brandColorLight !== DEFAULT_DATA.brandColorLight) compact.bl = stateObj.brandColorLight;
-      if (stateObj.brandColorDark && stateObj.brandColorDark !== DEFAULT_DATA.brandColorDark) compact.bd = stateObj.brandColorDark;
+      const compact = { c: company, s: compactCats, p: compactProds };
+      if (stateObj.currencyCode && stateObj.currencyCode !== 'COP') compact.cu = stateObj.currencyCode;
+      if (stateObj.brandColor && stateObj.brandColor !== DEFAULT_DATA.brandColor) {
+        compact.b = stateObj.brandColor;
+        compact.bl = stateObj.brandColorLight || DEFAULT_DATA.brandColorLight;
+        compact.bd = stateObj.brandColorDark || DEFAULT_DATA.brandColorDark;
+      }
       if (stateObj.pageBgColor && stateObj.pageBgColor !== DEFAULT_DATA.pageBgColor) compact.pb = stateObj.pageBgColor;
       if (stateObj.sectionBgColor && stateObj.sectionBgColor !== DEFAULT_DATA.sectionBgColor) compact.sb = stateObj.sectionBgColor;
       if (stateObj.sectionTextColor && stateObj.sectionTextColor !== DEFAULT_DATA.sectionTextColor) compact.st = stateObj.sectionTextColor;
-      if (stateObj.currencyCode && stateObj.currencyCode !== 'COP') compact.cu = stateObj.currencyCode;
 
-      if (Array.isArray(stateObj.categories) && stateObj.categories.length) {
-        compact.k = stateObj.categories.map(cat => {
-          const item = { i: cat.id, n: cat.name };
-          if (cat.color && cat.color !== (compact.b || DEFAULT_DATA.brandColor)) item.c = cat.color;
-          if (cat.textColor && cat.textColor !== '#ffffff') item.t = cat.textColor;
-          return item;
-        });
-      }
-
-      if (Array.isArray(stateObj.products) && stateObj.products.length) {
-        compact.p = stateObj.products.map(prod => {
-          const item = {
-            i: prod.id,
-            c: prod.categoryId,
-            n: prod.name,
-            v: Number(prod.priceCOP) || 0
-          };
-          if (prod.description) item.d = prod.description;
-          const pImg = (prod.image || '').trim();
-          if (pImg && !pImg.startsWith('data:')) item.m = pImg;
-          return item;
-        });
-      }
-
-      return compact;
-    }
-
-    async function encodeCatalogToHashAsync(stateObj) {
-      const compact = buildCompactCatalogPayload(stateObj);
-      const rawBytes = new TextEncoder().encode(JSON.stringify(compact));
-      if (typeof CompressionStream !== 'undefined') {
-        try {
-          const cs = new CompressionStream('deflate');
-          const writer = cs.writable.getWriter();
-          writer.write(rawBytes);
-          writer.close();
-          const compBuf = await new Response(cs.readable).arrayBuffer();
-          const compBytes = new Uint8Array(compBuf);
-          if (compBytes.length < rawBytes.length) {
-            return 'z1.' + bytesToBase64Url(compBytes);
-          }
-        } catch (e) {}
-      }
-      return 'r0.' + bytesToBase64Url(rawBytes);
-    }
-
-    function parseCompactCatalogObject(d) {
-      if (!d || !d.c) return null;
-      const currencyCode = CURRENCY_CONFIGS[d.cu] ? d.cu : 'COP';
-      const products = Array.isArray(d.p) ? d.p.map(item => ({
-        id: item.i || ('prod-' + Math.random().toString(36).slice(2, 8)),
-        categoryId: item.c || 'cat-general',
-        name: item.n || 'Producto',
-        priceCOP: Number(item.v) || 0,
-        price: formatPriceForCurrency(Number(item.v) || 0, currencyCode),
-        description: item.d || '',
-        image: item.m || ''
-      })) : [];
-
-      return {
-        brandColor: d.b || DEFAULT_DATA.brandColor,
-        brandColorLight: d.bl || DEFAULT_DATA.brandColorLight,
-        brandColorDark: d.bd || DEFAULT_DATA.brandColorDark,
-        pageBgColor: d.pb || DEFAULT_DATA.pageBgColor,
-        sectionBgColor: d.sb || DEFAULT_DATA.sectionBgColor,
-        sectionTextColor: d.st || DEFAULT_DATA.sectionTextColor,
-        currencyCode,
-        company: {
-          name: d.c.n || 'Tienda Online',
-          heroTitle: d.c.ht || d.c.n || 'Bienvenidos a nuestra tienda',
-          heroSubtitle: d.c.hs || '',
-          heroImage: d.c.hi || '',
-          description: d.c.d || '',
-          whatsapp: d.c.w || '',
-          location: d.c.l || '',
-          hours: d.c.h || ''
-        },
-        categories: Array.isArray(d.k) ? d.k.map(k => ({
-          id: k.i,
-          name: k.n,
-          color: k.c || d.b || '#e11d48',
-          textColor: k.t || '#ffffff'
-        })) : [],
-        products
-      };
-    }
-
-    async function decodeCatalogFromHashAsync() {
-      try {
-        const hash = window.location.hash || '';
-        const match = hash.match(/cat=([A-Za-z0-9\-_\.]+)/);
-        if (!match) return null;
-        const payload = match[1];
-        if (payload.startsWith('z1.') && typeof DecompressionStream !== 'undefined') {
-          const compBytes = base64UrlToBytes(payload.slice(3));
-          const ds = new DecompressionStream('deflate');
-          const writer = ds.writable.getWriter();
-          writer.write(compBytes);
-          writer.close();
-          const rawBuf = await new Response(ds.readable).arrayBuffer();
-          const json = new TextDecoder().decode(new Uint8Array(rawBuf));
-          return parseCompactCatalogObject(JSON.parse(json));
-        }
-        const rawStr = payload.startsWith('r0.') ? payload.slice(3) : payload;
-        const bytes = base64UrlToBytes(rawStr);
-        const json = new TextDecoder().decode(bytes);
-        return parseCompactCatalogObject(JSON.parse(json));
-      } catch (e) {
-        return null;
-      }
+      const json = JSON.stringify(compact);
+      const bytes = new TextEncoder().encode(json);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
     }
 
     function decodeCatalogFromHash() {
       try {
         const hash = window.location.hash || '';
-        const match = hash.match(/cat=([A-Za-z0-9\-_\.]+)/);
+        const match = hash.match(/(?:^|[#&])(?:v|cat)=([A-Za-z0-9\-_]+)/);
         if (!match) return null;
-        const payload = match[1];
-        if (payload.startsWith('z1.')) return null;
-        const rawStr = payload.startsWith('r0.') ? payload.slice(3) : payload;
-        const bytes = base64UrlToBytes(rawStr);
+        let b64 = match[1].replace(/-/g, '+').replace(/_/g, '/');
+        while (b64.length % 4) b64 += '=';
+        const bin = atob(b64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
         const json = new TextDecoder().decode(bytes);
-        return parseCompactCatalogObject(JSON.parse(json));
+        const d = JSON.parse(json);
+        if (!d || !d.c) return null;
+
+        const brandColor = d.b || DEFAULT_DATA.brandColor;
+        const currencyCode = CURRENCY_CONFIGS[d.cu] ? d.cu : 'COP';
+
+        const categories = Array.isArray(d.s)
+          ? d.s.map((cat, idx) => ({
+              id: 'sec-' + idx,
+              name: cat.n || 'Sección',
+              color: cat.c || brandColor,
+              textColor: cat.t || '#ffffff'
+            }))
+          : (Array.isArray(d.k)
+              ? d.k.map((cat, idx) => ({
+                  id: cat.i || ('sec-' + idx),
+                  name: cat.n || 'Sección',
+                  color: cat.c || brandColor,
+                  textColor: cat.t || '#ffffff'
+                }))
+              : []);
+
+        const fallbackCatId = categories[0] ? categories[0].id : 'sec-0';
+        if (categories.length === 0) {
+          categories.push({ id: fallbackCatId, name: 'Productos', color: brandColor, textColor: '#ffffff' });
+        }
+
+        const products = Array.isArray(d.p)
+          ? d.p.map((item, idx) => {
+              const amountCOP = Number(item.v) || 0;
+              let catId = fallbackCatId;
+              if (typeof item.k === 'number' && categories[item.k]) {
+                catId = categories[item.k].id;
+              } else if (item.c) {
+                catId = item.c;
+              }
+              return {
+                id: item.i || ('p-' + idx),
+                categoryId: catId,
+                name: item.n || 'Producto',
+                priceCOP: amountCOP,
+                price: formatPriceForCurrency(amountCOP, currencyCode),
+                description: item.d || '',
+                image: item.m || ''
+              };
+            })
+          : [];
+
+        const storeName = d.c.n || 'Tienda Online';
+        return {
+          brandColor,
+          brandColorLight: d.bl || DEFAULT_DATA.brandColorLight,
+          brandColorDark: d.bd || DEFAULT_DATA.brandColorDark,
+          pageBgColor: d.pb || DEFAULT_DATA.pageBgColor,
+          sectionBgColor: d.sb || DEFAULT_DATA.sectionBgColor,
+          sectionTextColor: d.st || DEFAULT_DATA.sectionTextColor,
+          currencyCode,
+          company: {
+            name: storeName,
+            heroTitle: d.c.ht || storeName,
+            heroSubtitle: d.c.hs || 'Explora nuestros productos disponibles y haz tu pedido directo por WhatsApp.',
+            heroImage: d.c.hi || '',
+            description: d.c.d || '',
+            whatsapp: d.c.w || '',
+            location: d.c.l || '',
+            hours: d.c.h || ''
+          },
+          categories,
+          products
+        };
       } catch (e) {
         return null;
       }
     }
 
-    async function buildShareableCatalogUrl() {
-      const encoded = await encodeCatalogToHashAsync(appState);
+    function getShareableCatalogUrl() {
+      const encoded = encodeCatalogToHash(appState);
       const baseUrl = window.location.href.split('#')[0];
-      return `${baseUrl}#cat=${encoded}`;
+      return `${baseUrl}#v=${encoded}`;
     }
 
-    async function copyShareableCatalogLink() {
+    function copyShareableCatalogLink() {
       const hasEmbeddedImages =
         (appState.products || []).some(p => (p.image || '').startsWith('data:')) ||
         (appState.company.heroImage || '').startsWith('data:');
-      const shareUrl = await buildShareableCatalogUrl();
+      const shareUrl = getShareableCatalogUrl();
 
       copyTextToClipboard(shareUrl, () => {
         if (hasEmbeddedImages) {
-          showToast('Link comprimido copiado (las fotos locales no van en el link; usa URLs o exporta archivo)');
+          showToast('Link de solo compra copiado (usa URLs de fotos para que el enlace sea más corto)');
         } else {
-          showToast('¡Enlace corto copiado! Envíalo a tus clientes');
+          showToast('¡Link corto de solo compra copiado!');
         }
       });
     }
 
-    async function copyWhatsAppPromoMessage() {
-      const shareUrl = await buildShareableCatalogUrl();
+    function copyWhatsAppPromoMessage() {
+      const shareUrl = getShareableCatalogUrl();
       const store = appState.company.name || 'nuestra tienda';
       const msg = `🛍️ *¡Conoce el catálogo digital de ${store}!*\n\nExplora nuestros productos disponibles, arma tu carrito y envíanos tu pedido directo por WhatsApp aquí 👇\n${shareUrl}`;
       copyTextToClipboard(msg, () => {
@@ -1711,17 +1685,8 @@
       } catch (e) {}
     }
 
-    function startFreshCatalogFromShared() {
-      history.replaceState(null, '', window.location.pathname + window.location.search);
-      isViewingSharedLink = false;
-      openAuthModal('register', true);
-    }
-
     function loadSampleTemplate() {
-      if (isViewingSharedLink) {
-        history.replaceState(null, '', window.location.pathname + window.location.search);
-        isViewingSharedLink = false;
-      }
+      if (isViewingSharedLink) return;
       const base = JSON.parse(JSON.stringify(DEFAULT_DATA));
       base.products = base.products.map(p => ({
         ...p,
@@ -1756,10 +1721,7 @@
     }
 
     function requireAuth(callback) {
-      if (isViewingSharedLink) {
-        startFreshCatalogFromShared();
-        return false;
-      }
+      if (isViewingSharedLink) return false;
       if (currentUser) {
         if (typeof callback === 'function') callback();
         return true;
@@ -1770,15 +1732,12 @@
     }
 
     function openAuthModal(tab = 'register', isInitialEntry = false) {
+      if (isViewingSharedLink) return;
       switchAuthTab(tab);
       const demoFooter = document.getElementById('auth-demo-footer');
       const closeBtn = document.getElementById('auth-close-btn');
-      if (demoFooter) {
-        demoFooter.classList.toggle('hidden', !isInitialEntry);
-      }
-      if (closeBtn) {
-        closeBtn.classList.toggle('hidden', isInitialEntry);
-      }
+      if (demoFooter) demoFooter.classList.toggle('hidden', !isInitialEntry);
+      if (closeBtn) closeBtn.classList.toggle('hidden', isInitialEntry);
       document.getElementById('auth-modal').classList.remove('hidden');
       lucide.createIcons();
     }
@@ -1809,14 +1768,14 @@
       if (tab === 'register') {
         loginForm.classList.add('hidden');
         regForm.classList.remove('hidden');
-        tabReg.className = 'py-2.5 rounded-xl text-xs font-extrabold transition-all bg-white text-slate-900 shadow-sm';
+        tabReg.className = 'py-2.5 rounded-xl text-xs font-extrabold transition-all bg-white text-slate-900 shadow-xs';
         tabLogin.className = 'py-2.5 rounded-xl text-xs font-bold transition-all text-slate-500 hover:text-slate-800';
         if (title) title.textContent = 'Crear Cuenta';
         if (sub) sub.textContent = 'Crea tu catálogo digital o inicia sesión';
       } else {
         regForm.classList.add('hidden');
         loginForm.classList.remove('hidden');
-        tabLogin.className = 'py-2.5 rounded-xl text-xs font-extrabold transition-all bg-white text-slate-900 shadow-sm';
+        tabLogin.className = 'py-2.5 rounded-xl text-xs font-extrabold transition-all bg-white text-slate-900 shadow-xs';
         tabReg.className = 'py-2.5 rounded-xl text-xs font-bold transition-all text-slate-500 hover:text-slate-800';
         if (title) title.textContent = 'Iniciar Sesión';
         if (sub) sub.textContent = 'Continúa editando tu catálogo guardado';
@@ -1942,6 +1901,7 @@
     }
 
     function updateAuthUI() {
+      const authBox = document.getElementById('drawer-auth-box');
       const loggedOut = document.getElementById('drawer-logged-out-view');
       const loggedIn = document.getElementById('drawer-logged-in-view');
       const adminActions = document.getElementById('drawer-admin-actions');
@@ -1951,14 +1911,36 @@
       const quickEditBtn = document.getElementById('quick-edit-toggle');
       const headerCreateCta = document.getElementById('header-create-cta');
       const heroVisitorActions = document.getElementById('hero-visitor-actions');
-      const sharedBanner = document.getElementById('shared-preview-banner');
+      const onboardingSteps = document.getElementById('onboarding-steps');
+      const emptyOwnerActions = document.getElementById('empty-state-owner-actions');
+      const drawerTitle = document.getElementById('drawer-main-title');
+      const drawerSub = document.getElementById('drawer-main-subtitle');
       const adminOnlyEls = document.querySelectorAll('.admin-only');
 
-      if (sharedBanner) {
-        sharedBanner.classList.toggle('hidden', !isViewingSharedLink);
+      if (isViewingSharedLink) {
+        currentUser = null;
+        isEditMode = false;
+        if (authBox) authBox.classList.add('hidden');
+        if (adminActions) adminActions.classList.add('hidden');
+        if (shareSection) shareSection.classList.add('hidden');
+        if (colorSection) colorSection.classList.add('hidden');
+        if (resetSection) resetSection.classList.add('hidden');
+        if (quickEditBtn) quickEditBtn.classList.add('hidden');
+        if (headerCreateCta) headerCreateCta.classList.add('hidden');
+        if (heroVisitorActions) heroVisitorActions.classList.add('hidden');
+        if (onboardingSteps) onboardingSteps.classList.add('hidden');
+        if (emptyOwnerActions) emptyOwnerActions.classList.add('hidden');
+        if (drawerTitle) drawerTitle.textContent = appState.company?.name || 'Catálogo';
+        if (drawerSub) drawerSub.textContent = 'Secciones y moneda';
+        adminOnlyEls.forEach(el => el.classList.add('hidden'));
+        return;
       }
 
-      if (currentUser && !isViewingSharedLink) {
+      if (authBox) authBox.classList.remove('hidden');
+      if (drawerTitle) drawerTitle.textContent = 'Opciones del Catálogo';
+      if (drawerSub) drawerSub.textContent = 'Crea, gestiona y comparte tu tienda';
+
+      if (currentUser) {
         loggedOut.classList.add('hidden');
         loggedIn.classList.remove('hidden');
         adminActions.classList.remove('hidden');
@@ -1968,6 +1950,7 @@
         quickEditBtn.classList.remove('hidden');
         if (headerCreateCta) headerCreateCta.classList.add('hidden');
         if (heroVisitorActions) heroVisitorActions.classList.add('hidden');
+        if (emptyOwnerActions) emptyOwnerActions.classList.remove('hidden');
         adminOnlyEls.forEach(el => el.classList.remove('hidden'));
 
         document.getElementById('drawer-admin-name').textContent = currentUser.name || 'Administrador';
@@ -1982,6 +1965,7 @@
         quickEditBtn.classList.add('hidden');
         if (headerCreateCta) headerCreateCta.classList.remove('hidden');
         if (heroVisitorActions) heroVisitorActions.classList.remove('hidden');
+        if (emptyOwnerActions) emptyOwnerActions.classList.add('hidden');
         adminOnlyEls.forEach(el => el.classList.add('hidden'));
       }
     }
@@ -2014,12 +1998,12 @@
     }
 
     function changeCustomBrandColor(hex) {
-      if (!currentUser) return;
+      if (!currentUser || isViewingSharedLink) return;
       changeBrandColor(hex, hexToRgba(hex, 0.12), hex);
     }
 
     function changePageColors(pageBg, sectionBg, sectionText) {
-      if (!currentUser) return;
+      if (!currentUser || isViewingSharedLink) return;
       if (pageBg) appState.pageBgColor = pageBg;
       if (sectionBg) appState.sectionBgColor = sectionBg;
       if (sectionText) appState.sectionTextColor = sectionText;
@@ -2029,7 +2013,7 @@
     }
 
     function resetThemeColors() {
-      if (!currentUser) return;
+      if (!currentUser || isViewingSharedLink) return;
       appState.brandColor = DEFAULT_DATA.brandColor;
       appState.brandColorLight = DEFAULT_DATA.brandColorLight;
       appState.brandColorDark = DEFAULT_DATA.brandColorDark;
@@ -2044,7 +2028,7 @@
     }
 
     function changeBrandColor(primary, light, dark) {
-      if (!currentUser) return;
+      if (!currentUser || isViewingSharedLink) return;
       appState.brandColor = primary;
       appState.brandColorLight = light;
       appState.brandColorDark = dark;
@@ -2087,28 +2071,6 @@
 
       document.getElementById('hero-display-title').textContent = c.heroTitle || c.name || 'Catálogo Digital';
       document.getElementById('hero-display-subtitle').textContent = c.heroSubtitle || '';
-
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      const ogDesc = document.querySelector('meta[property="og:description"]');
-      const ogImg = document.getElementById('og-image-meta');
-      const ogImgSec = document.getElementById('og-secure-image-meta');
-      const twImg = document.getElementById('twitter-image-meta');
-
-      if (ogTitle && c.name && c.name !== 'Nova Store (Demo)') {
-        ogTitle.setAttribute('content', `${c.name} — Catálogo Digital`);
-      }
-      if (ogDesc && (c.description || c.heroSubtitle) && c.description !== DEFAULT_DATA.company.description) {
-        ogDesc.setAttribute('content', c.description || c.heroSubtitle);
-      }
-
-      const heroSrc = (c.heroImage || '').trim();
-      const firstProdImg = (appState.products || []).map(p => (p.image || '').trim()).find(u => /^https?:\/\//i.test(u));
-      if (/^https?:\/\//i.test(heroSrc) || firstProdImg) {
-        const previewUrl = /^https?:\/\//i.test(heroSrc) ? heroSrc : firstProdImg;
-        if (ogImg) ogImg.setAttribute('content', previewUrl);
-        if (ogImgSec) ogImgSec.setAttribute('content', previewUrl);
-        if (twImg) twImg.setAttribute('content', previewUrl);
-      }
 
       const pill = document.getElementById('hero-platform-pill');
       if (pill) {
@@ -2172,7 +2134,7 @@
       const allBtn = document.createElement('button');
       allBtn.type = 'button';
       allBtn.className = activeCategoryId === 'all'
-        ? 'px-4 py-2 rounded-xl bg-brand text-white text-xs sm:text-sm font-bold shadow-sm shrink-0 transition-all'
+        ? 'px-4 py-2 rounded-xl bg-brand text-white text-xs sm:text-sm font-bold shadow-xs shrink-0 transition-all'
         : 'px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs sm:text-sm font-semibold shrink-0 transition-all';
       allBtn.textContent = `Todos (${appState.products.length})`;
       allBtn.onclick = () => {
@@ -2212,7 +2174,7 @@
         };
         wrap.appendChild(btn);
 
-        if (isEditMode) {
+        if (isEditMode && !isViewingSharedLink) {
           const editBtn = document.createElement('button');
           editBtn.type = 'button';
           editBtn.title = 'Editar sección';
@@ -2343,6 +2305,7 @@
     }
 
     function handleGlobalPasteImage(e) {
+      if (isViewingSharedLink) return;
       const productModalOpen = !document.getElementById('product-modal').classList.contains('hidden');
       const companyModalOpen = !document.getElementById('company-modal').classList.contains('hidden');
       if (!productModalOpen && !companyModalOpen) return;
@@ -2413,10 +2376,12 @@
       }
       empty.classList.add('hidden');
 
+      const showItemEditControls = isEditMode && !isViewingSharedLink;
+
       filtered.forEach(p => {
         const cat = appState.categories.find(c => c.id === p.categoryId);
         const card = document.createElement('article');
-        card.className = 'group bg-section-card rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between';
+        card.className = 'group bg-section-card rounded-3xl border border-slate-200/80 overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col justify-between';
 
         const imgSrc = escapeHtml(p.image || 'https://placehold.co/600x600/f1f5f9/64748b?text=Producto');
         const safeName = escapeHtml(p.name);
@@ -2430,7 +2395,7 @@
           <div onclick="openProductDetail('${p.id}')" class="cursor-pointer flex-1 flex flex-col">
             <div class="relative aspect-square bg-slate-100 overflow-hidden">
               <img src="${imgSrc}" alt="${safeName}" loading="lazy" onerror="this.src='https://placehold.co/600x600/f1f5f9/64748b?text=Sin+Imagen'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-              <span style="background-color:${catBadgeBg};color:${catBadgeText};" class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[10px] font-bold shadow-sm">${safeCat}</span>
+              <span style="background-color:${catBadgeBg};color:${catBadgeText};" class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[10px] font-bold shadow-xs">${safeCat}</span>
             </div>
             <div class="p-3.5 sm:p-4 flex-1 flex flex-col justify-between">
               <div>
@@ -2446,7 +2411,7 @@
               </div>
             </div>
           </div>
-          ${isEditMode ? `
+          ${showItemEditControls ? `
             <div class="px-3.5 pb-3.5 pt-1 flex items-center gap-1.5">
               <button type="button" onclick="openProductModal('${p.id}')" class="flex-1 py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center justify-center gap-1 transition-all">
                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
@@ -2504,11 +2469,11 @@
 
       const editOnlyEls = document.querySelectorAll('.edit-only');
       editOnlyEls.forEach(el => {
-        el.classList.toggle('hidden', !isEditMode);
+        el.classList.toggle('hidden', !isEditMode || isViewingSharedLink);
       });
 
       const banner = document.getElementById('edit-mode-banner');
-      if (banner) banner.classList.toggle('hidden', !isEditMode);
+      if (banner) banner.classList.toggle('hidden', !isEditMode || isViewingSharedLink);
 
       const quickEditText = document.getElementById('quick-edit-text');
       const quickEditToggle = document.getElementById('quick-edit-toggle');
@@ -2531,6 +2496,7 @@
     }
 
     function toggleEditMode() {
+      if (isViewingSharedLink) return;
       if (!currentUser) {
         requireAuth(() => toggleEditMode());
         return;
@@ -2559,6 +2525,7 @@
     }
 
     function openCompanyModal() {
+      if (isViewingSharedLink) return;
       if (!currentUser) {
         requireAuth(() => openCompanyModal());
         return;
@@ -2583,7 +2550,7 @@
 
     function saveCompanyData(e) {
       e.preventDefault();
-      if (!currentUser) return;
+      if (!currentUser || isViewingSharedLink) return;
       appState.company = {
         ...appState.company,
         heroImage: document.getElementById('input-hero-image').value.trim(),
@@ -2602,6 +2569,7 @@
     }
 
     function openCategoryModal(categoryId = '') {
+      if (isViewingSharedLink) return;
       if (!currentUser) {
         requireAuth(() => openCategoryModal(categoryId));
         return;
@@ -2622,7 +2590,7 @@
 
     function saveCategory(e) {
       e.preventDefault();
-      if (!currentUser) return;
+      if (!currentUser || isViewingSharedLink) return;
       const id = document.getElementById('edit-category-id').value.trim();
       const name = document.getElementById('input-category-name').value.trim();
       const color = document.getElementById('input-category-color').value || '#e11d48';
@@ -2649,6 +2617,7 @@
     }
 
     function deleteCategory(categoryId) {
+      if (isViewingSharedLink) return;
       if (!currentUser) {
         requireAuth(() => deleteCategory(categoryId));
         return;
@@ -2721,6 +2690,7 @@
     }
 
     function openProductModal(productId = '') {
+      if (isViewingSharedLink) return;
       if (!currentUser) {
         requireAuth(() => openProductModal(productId));
         return;
@@ -2775,7 +2745,7 @@
 
     function saveProduct(e) {
       e.preventDefault();
-      if (!currentUser) return;
+      if (!currentUser || isViewingSharedLink) return;
 
       const id = document.getElementById('edit-product-id').value.trim();
       const name = document.getElementById('input-product-name').value.trim();
@@ -2827,6 +2797,7 @@
     }
 
     function deleteProduct(productId) {
+      if (isViewingSharedLink) return;
       if (!currentUser) {
         requireAuth(() => deleteProduct(productId));
         return;
@@ -2847,6 +2818,10 @@
     }
 
     function renderAll() {
+      if (isViewingSharedLink) {
+        currentUser = null;
+        isEditMode = false;
+      }
       applyBrandTheme();
       renderCompanyAndHero();
       renderCategories();
@@ -3034,6 +3009,7 @@
     }
 
     function confirmEmptyCatalog() {
+      if (isViewingSharedLink) return;
       if (!currentUser) {
         requireAuth(() => confirmEmptyCatalog());
         return;
@@ -3056,6 +3032,7 @@
     }
 
     function confirmResetCatalog() {
+      if (isViewingSharedLink) return;
       if (!currentUser) {
         requireAuth(() => confirmResetCatalog());
         return;
@@ -3122,7 +3099,7 @@
       }
 
       const eb = document.getElementById('detail-edit-btn');
-      if (isEditMode && currentUser) {
+      if (isEditMode && currentUser && !isViewingSharedLink) {
         eb.classList.remove('hidden');
         eb.onclick = () => {
           closeProductDetail();
@@ -3220,15 +3197,10 @@
           try {
             localStorage.setItem(POS_KEY, JSON.stringify(saved));
           } catch (err) {}
-        }
-      }
-
-      ball.addEventListener('click', () => {
-        if (!hasMoved) {
+        } else {
           openCartDrawer();
         }
-        hasMoved = false;
-      });
+      }
 
       ball.addEventListener('pointerup', endDrag);
       ball.addEventListener('pointercancel', endDrag);
@@ -3240,36 +3212,17 @@
       });
     }
 
-    async function hydrateFromCompressedHashIfNeeded() {
-      const hash = window.location.hash || '';
-      if (/cat=z1\./.test(hash)) {
-        const decoded = await decodeCatalogFromHashAsync();
-        if (decoded) {
-          isViewingSharedLink = true;
-          appState = decoded;
-          currentUser = null;
-          isEditMode = false;
-          activeCategoryId = 'all';
-          renderAll();
-          const authModal = document.getElementById('auth-modal');
-          if (authModal) authModal.classList.add('hidden');
-        }
-      }
-    }
-
-    window.addEventListener('hashchange', async () => {
+    window.addEventListener('hashchange', () => {
       appState = loadState();
       currentUser = isViewingSharedLink ? null : loadSession();
-      isEditMode = Boolean(currentUser);
+      isEditMode = Boolean(currentUser && !isViewingSharedLink);
       activeCategoryId = 'all';
       renderAll();
-      await hydrateFromCompressedHashIfNeeded();
     });
 
-    document.addEventListener('DOMContentLoaded', async () => {
+    document.addEventListener('DOMContentLoaded', () => {
       renderAll();
       initDraggableCartBall();
-      await hydrateFromCompressedHashIfNeeded();
       if (!currentUser && !isViewingSharedLink) {
         openAuthModal('register', true);
       }
