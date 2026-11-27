@@ -1744,7 +1744,6 @@ ${shareUrl}`;
     }
 
     function openAuthModal(tab = 'register', isInitialEntry = false) {
-      if (isViewingSharedLink) return;
       switchAuthTab(tab);
       const demoFooter = document.getElementById('auth-demo-footer');
       const closeBtn = document.getElementById('auth-close-btn');
@@ -1806,7 +1805,6 @@ ${shareUrl}`;
 
     function handleLogin(e) {
       e.preventDefault();
-      if (isViewingSharedLink) return;
       const identifier = document.getElementById('login-identifier').value.trim().toLowerCase();
       const password = document.getElementById('login-password').value;
       const errEl = document.getElementById('auth-error-msg');
@@ -1838,7 +1836,6 @@ ${shareUrl}`;
 
     function handleRegister(e) {
       e.preventDefault();
-      if (isViewingSharedLink) return;
       const companyName = document.getElementById('reg-name').value.trim();
       const whatsapp = document.getElementById('reg-whatsapp').value.trim();
       const email = document.getElementById('reg-identifier').value.trim().toLowerCase();
@@ -1911,7 +1908,7 @@ ${shareUrl}`;
       renderAll();
       showToast('Sesión cerrada');
       if (!isViewingSharedLink) {
-        openAuthModal('login', true);
+        openAuthModal('login', false);
       }
     }
 
@@ -1935,9 +1932,13 @@ ${shareUrl}`;
       const adminOnlyEls = document.querySelectorAll('.admin-only');
 
       if (isViewingSharedLink) {
-        currentUser = null;
-        isEditMode = false;
         if (authBox) authBox.classList.remove('hidden');
+        if (loggedOut) loggedOut.classList.toggle('hidden', Boolean(currentUser));
+        if (loggedIn) loggedIn.classList.toggle('hidden', !currentUser);
+        if (currentUser) {
+          document.getElementById('drawer-admin-name').textContent = currentUser.name || 'Usuario';
+          document.getElementById('drawer-admin-email').textContent = currentUser.identifier || '';
+        }
         if (adminActions) adminActions.classList.add('hidden');
         if (shareSection) shareSection.classList.add('hidden');
         if (colorSection) colorSection.classList.add('hidden');
@@ -2853,10 +2854,6 @@ ${shareUrl}`;
 
     function renderAll() {
       isViewingSharedLink = hasSharedHashInUrl();
-      if (isViewingSharedLink) {
-        currentUser = null;
-        isEditMode = false;
-      }
       applyBrandTheme();
       renderCompanyAndHero();
       renderCategories();
@@ -3253,8 +3250,6 @@ ${waLines.join('\\n')}
 
     window.addEventListener('hashchange', () => {
       appState = loadState();
-      currentUser = isViewingSharedLink ? null : loadSession();
-      isEditMode = Boolean(currentUser && !isViewingSharedLink);
       activeCategoryId = 'all';
       renderAll();
     });
