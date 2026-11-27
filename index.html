@@ -1574,10 +1574,7 @@
     function copyWhatsAppPromoMessage() {
       const shareUrl = getShareableCatalogUrl();
       const store = appState.company.name || 'nuestra tienda';
-      const msg = `🛍️ *¡Conoce el catálogo digital de ${store}!*
-
-Explora nuestros productos disponibles, arma tu carrito y envíanos tu pedido directo por WhatsApp aquí 👇
-${shareUrl}`;
+      const msg = `🛍️ *¡Conoce el catálogo digital de ${store}!*\n\nExplora nuestros productos disponibles, arma tu carrito y envíanos tu pedido directo por WhatsApp aquí 👇\n${shareUrl}`;
       copyTextToClipboard(msg, () => {
         showToast('Mensaje promocional copiado para WhatsApp');
       });
@@ -1878,9 +1875,11 @@ ${shareUrl}`;
       } catch (err) {}
 
       if (startClean) {
+        const brandCol = appState.brandColor || '#e11d48';
         appState = {
           ...JSON.parse(JSON.stringify(DEFAULT_DATA)),
-          categories: [{ id: 'cat-general', name: 'Destacados', color: '#e11d48', textColor: '#ffffff' }],
+          brandColor: brandCol,
+          categories: [{ id: 'cat-general', name: 'Destacados', color: brandCol, textColor: '#ffffff' }],
           products: []
         };
       }
@@ -3006,12 +3005,7 @@ ${shareUrl}`;
 
       if (checkoutBtn) {
         const ph = (appState.company.whatsapp || '').replace(/\D/g, '');
-        const text = `Hola *${appState.company.name}*, me gustaría realizar el siguiente pedido:
-
-${waLines.join('
-')}
-
-*Total estimado:* ${formattedTotal}`;
+        const text = `Hola *${appState.company.name}*, me gustaría realizar el siguiente pedido:\n\n${waLines.join('\n')}\n\n*Total estimado:* ${formattedTotal}`;
         const encoded = encodeURIComponent(text);
         checkoutBtn.href = ph ? `https://wa.me/${ph}?text=${encoded}` : `https://wa.me/?text=${encoded}`;
       }
@@ -3049,7 +3043,7 @@ ${waLines.join('
         () => {
           appState.products = [];
           if (!appState.categories || appState.categories.length === 0) {
-            appState.categories = [{ id: 'cat-general', name: 'Destacados', color: '#e11d48', textColor: '#ffffff' }];
+            appState.categories = [{ id: 'cat-general', name: 'Destacados', color: appState.brandColor || '#e11d48', textColor: '#ffffff' }];
           }
           activeCategoryId = 'all';
           saveState();
