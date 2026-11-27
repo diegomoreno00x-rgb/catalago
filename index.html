@@ -3021,8 +3021,7 @@ ${shareUrl}`;
         const ph = (appState.company.whatsapp || '').replace(/\D/g, '');
         const text = `Hola *${appState.company.name}*, me gustaría realizar el siguiente pedido:
 
-${waLines.join('
-')}
+${waLines.join('\\n')}
 
 *Total estimado:* ${formattedTotal}`;
         const encoded = encodeURIComponent(text);
