@@ -312,7 +312,7 @@
             <span class="w-6 h-6 rounded-full bg-brand text-white font-extrabold flex items-center justify-center shrink-0">2</span>
             <div>
               <p class="font-bold text-slate-900">Agrega secciones y productos</p>
-              <p class="text-slate-500 mt-0.5">Usa enlaces URL de fotos para que el link sea corto y cargue rápido.</p>
+              <p class="text-slate-500 mt-0.5">Sube, pega o arrastra tus fotos y copia el enlace directamente.</p>
             </div>
           </div>
 
@@ -327,7 +327,7 @@
       </div>
     </section>
 
-    <!-- Información de la Empresa (Desplegable) -->
+    <!-- Información de la Empresa -->
     <section id="datos-empresa" class="hidden max-w-5xl mx-auto px-4 mt-6 relative z-10 animate-fade-in">
       <div class="bg-section-card rounded-3xl shadow-md border border-slate-200/80 p-5 sm:p-7">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
@@ -351,6 +351,7 @@
               <span>Editar Datos de Empresa</span>
             </button>
             <button
+              id="close-company-section-btn"
               type="button"
               onclick="toggleCompanySection(false)"
               class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold"
@@ -428,7 +429,7 @@
           </div>
           <div>
             <p class="text-xs sm:text-sm font-bold">Panel Rápido de Creación y Publicación</p>
-            <p class="text-[11px] text-slate-300">Agrega secciones, sube productos o copia el enlace de solo compra para tus clientes</p>
+            <p class="text-[11px] text-slate-300">Agrega secciones, sube/pega fotos y copia el enlace directo para tus clientes</p>
           </div>
         </div>
 
@@ -1080,7 +1081,7 @@
                 type="text"
                 id="input-hero-image"
                 oninput="updateHeroPreviewFromUrl(this.value)"
-                placeholder="Pega enlace (URL) de imagen de portada..."
+                placeholder="Pega enlace (URL) o sube/pega una foto..."
                 class="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs"
               />
             </div>
@@ -1209,7 +1210,7 @@
                 type="text"
                 id="input-product-image"
                 oninput="updatePreviewFromUrl(this.value)"
-                placeholder="Pega enlace (URL) directo de imagen (recomendado para link corto)..."
+                placeholder="Pega enlace (URL) o sube/pega una foto..."
                 class="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs"
               />
             </div>
@@ -1409,6 +1410,7 @@
       return `${cfg.prefix}${formatted}${cfg.suffix}`;
     }
 
+    // Incluye tanto URLs como imágenes subidas/pegadas (data:image/...) en el enlace #v=...
     function encodeCatalogToHash(stateObj) {
       const categories = Array.isArray(stateObj.categories) ? stateObj.categories : [];
       const catIndexMap = new Map();
@@ -1429,7 +1431,7 @@
         if (typeof cIdx === 'number') item.k = cIdx;
         if (prod.description && prod.description.trim()) item.d = prod.description.trim();
         const img = (prod.image || '').trim();
-        if (img && !img.startsWith('data:')) item.m = img;
+        if (img) item.m = img;
         return item;
       });
 
@@ -1440,7 +1442,7 @@
       }
       if (stateObj.company?.heroSubtitle) company.hs = stateObj.company.heroSubtitle;
       const hImg = (stateObj.company?.heroImage || '').trim();
-      if (hImg && !hImg.startsWith('data:')) company.hi = hImg;
+      if (hImg) company.hi = hImg;
       if (stateObj.company?.description) company.d = stateObj.company.description;
       if (stateObj.company?.whatsapp) company.w = stateObj.company.whatsapp;
       if (stateObj.company?.location) company.l = stateObj.company.location;
@@ -1557,24 +1559,19 @@
     }
 
     function copyShareableCatalogLink() {
-      const hasEmbeddedImages =
-        (appState.products || []).some(p => (p.image || '').startsWith('data:')) ||
-        (appState.company.heroImage || '').startsWith('data:');
       const shareUrl = getShareableCatalogUrl();
-
       copyTextToClipboard(shareUrl, () => {
-        if (hasEmbeddedImages) {
-          showToast('Link de cliente copiado (usa enlaces URL de fotos para que el link sea más corto)');
-        } else {
-          showToast('¡Link de cliente copiado! Solo ver y comprar');
-        }
+        showToast('¡Link de cliente copiado! Incluye tus fotos y datos de empresa');
       });
     }
 
     function copyWhatsAppPromoMessage() {
       const shareUrl = getShareableCatalogUrl();
       const store = appState.company.name || 'nuestra tienda';
-      const msg = `🛍️ *¡Conoce el catálogo digital de ${store}!*\n\nExplora nuestros productos disponibles, arma tu carrito y envíanos tu pedido directo por WhatsApp aquí 👇\n${shareUrl}`;
+      const msg = `🛍️ *¡Conoce el catálogo digital de ${store}!*
+
+Explora nuestros productos disponibles, arma tu carrito y envíanos tu pedido directo por WhatsApp aquí 👇
+${shareUrl}`;
       copyTextToClipboard(msg, () => {
         showToast('Mensaje promocional copiado para WhatsApp');
       });
@@ -2118,6 +2115,23 @@
           if (heroDefaultContent) heroDefaultContent.classList.remove('hidden');
         }
       }
+
+      // En enlaces compartidos, muestra automáticamente la información de la empresa
+      const companySection = document.getElementById('datos-empresa');
+      const closeCompanyBtn = document.getElementById('close-company-section-btn');
+      if (companySection && isViewingSharedLink) {
+        const hasCompanyInfo = Boolean(
+          (c.name || '').trim() ||
+          (c.description || '').trim() ||
+          (c.whatsapp || '').trim() ||
+          (c.location || '').trim() ||
+          (c.hours || '').trim()
+        );
+        companySection.classList.toggle('hidden', !hasCompanyInfo);
+        if (closeCompanyBtn) closeCompanyBtn.classList.add('hidden');
+      } else if (closeCompanyBtn) {
+        closeCompanyBtn.classList.remove('hidden');
+      }
     }
 
     function toggleCompanySection(forceState) {
@@ -2268,7 +2282,7 @@
     function handleHeroImageUpload(ev) {
       const f = ev.target.files[0];
       if (!f) return;
-      processImageFileToDataUrl(f, 1400, 800, 0.85, applyHeroImageData);
+      processImageFileToDataUrl(f, 960, 540, 0.72, applyHeroImageData);
     }
 
     function applyProductImageData(dataUrl) {
@@ -2313,7 +2327,7 @@
       handleDropzoneDragLeave(e, 'hero-dropzone');
       const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
       if (file) {
-        processImageFileToDataUrl(file, 1400, 800, 0.85, applyHeroImageData);
+        processImageFileToDataUrl(file, 960, 540, 0.72, applyHeroImageData);
       }
     }
 
@@ -2322,7 +2336,7 @@
       handleDropzoneDragLeave(e, 'product-dropzone');
       const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
       if (file) {
-        processImageFileToDataUrl(file, 800, 800, 0.82, applyProductImageData);
+        processImageFileToDataUrl(file, 560, 560, 0.72, applyProductImageData);
       }
     }
 
@@ -2340,9 +2354,9 @@
           if (file) {
             e.preventDefault();
             if (productModalOpen) {
-              processImageFileToDataUrl(file, 800, 800, 0.82, applyProductImageData);
+              processImageFileToDataUrl(file, 560, 560, 0.72, applyProductImageData);
             } else if (companyModalOpen) {
-              processImageFileToDataUrl(file, 1400, 800, 0.85, applyHeroImageData);
+              processImageFileToDataUrl(file, 960, 540, 0.72, applyHeroImageData);
             }
           }
           break;
@@ -2755,7 +2769,7 @@
     function handleImageUpload(ev) {
       const f = ev.target.files[0];
       if (!f) return;
-      processImageFileToDataUrl(f, 800, 800, 0.82, applyProductImageData);
+      processImageFileToDataUrl(f, 560, 560, 0.72, applyProductImageData);
     }
 
     function updatePreviewFromUrl(url) {
@@ -3005,7 +3019,12 @@
 
       if (checkoutBtn) {
         const ph = (appState.company.whatsapp || '').replace(/\D/g, '');
-        const text = `Hola *${appState.company.name}*, me gustaría realizar el siguiente pedido:\n\n${waLines.join('\n')}\n\n*Total estimado:* ${formattedTotal}`;
+        const text = `Hola *${appState.company.name}*, me gustaría realizar el siguiente pedido:
+
+${waLines.join('
+')}
+
+*Total estimado:* ${formattedTotal}`;
         const encoded = encodeURIComponent(text);
         checkoutBtn.href = ph ? `https://wa.me/${ph}?text=${encoded}` : `https://wa.me/?text=${encoded}`;
       }
